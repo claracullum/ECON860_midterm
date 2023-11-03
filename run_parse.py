@@ -42,9 +42,6 @@ for file_name in glob.glob("html_files/*.html"):
 
     dataset = pandas.DataFrame(data)
 
-# dataset.to_csv("html_files/dataset.csv", index=False)
-
-# data_clean = pandas.read_csv("html_files/dataset.csv")
 data_initial = dataset.drop_duplicates()
 data_initial.to_csv("html_files/data_initial.csv", index=False)
 
