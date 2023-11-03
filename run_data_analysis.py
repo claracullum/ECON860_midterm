@@ -59,13 +59,13 @@ plt.savefig('parsed_files/Repo_Followers.png')
 
 #another
 updated_time = gh_user_data['updated_time']
-created_time = gh_user_data['created_time']
-gh_user_data.plot(kind='scatter',x='updated_time',y='created_time')
+starred = gh_user_data['starred']
+gh_user_data.plot(kind='scatter',x='updated_time',y='starred')
 
 plt.xlabel('Last time updated')
-plt.ylabel('Created')
-plt.title('Created VS Updated')
+plt.ylabel('# of Starred Repositories')
+plt.title('Updates and Stars')
 
-plt.savefig('parsed_files/Created.png')
+plt.savefig('parsed_files/Updated_Starred.png')
 
 
