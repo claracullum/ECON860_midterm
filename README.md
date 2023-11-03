@@ -20,5 +20,5 @@
 >"gh_user_id" in the "parsed_files" directory.
 
 5. run_data_analysis
-This program allows you to view A.) Summary Statistics B.) valid/invalid ID counts
-and C.) scatterplots of two data relationships. 
+>This program allows you to view A.) Summary Statistics B.) valid/invalid ID counts
+>and C.) scatterplots of two data relationships. 
