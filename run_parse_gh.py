@@ -6,8 +6,8 @@ import requests
 import json 
 import time
 
-if not os.path.exists("parsed_json_files"):
-	os.mkdir("parsed_json_files")
+if not os.path.exists("parsed_files"):
+	os.mkdir("parsed_files")
 
 
 another_dataset = pandas.DataFrame()
