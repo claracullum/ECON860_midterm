@@ -1,47 +1,53 @@
 import pandas
 import os
 import re
-import glob 
+import glob
+import numpy
 from bs4 import BeautifulSoup
 
 if not os.path.exists("parsed_files"):
-	os.mkdir("parsed_files")
+    os.mkdir("parsed_files")
 
 dataset = pandas.DataFrame()
 
-#for file_name in glob.glob("html_files/*.html"):
-f = open(file_name, "r")
-soup = BeautifulSoup(file.read(),'html.parser')
-f.close()
+for file_name in glob.glob("html_files/*.html"):
+    f = open(file_name, "r")
+    soup = BeautifulSoup(f.read(), 'html.parser')
+    f.close()
 
-# body = soup.find("span", {"id":"wrapper"})
+    big_list = soup.find_all("div", {"class": "grid grid-cols-4 gap-4"})
 
-big_list = soup.find_all("div", {"class":"grid grid-cols-4 gap-4"})
+    userid_list = []
+    repo_list = []
+    repo_num_list = []
+    followers_list = []
+    membersince_list = []
 
-userid_list = []
-repo_list = []
-followers_list = []
-membersince_list = []
+    for div in big_list:
+        userid = div.find("div", {"class": "userid"}).find("span")
+        userid_list.append(userid.text.strip())
+        repo = div.find("div", {"class": "repocount"}).text.strip()
+        repo_list.append(repo)
+        followercount = div.find("div", {"class": "followercount"})
+        followers_list.append(followercount.text.strip().replace("*  ",""))
+        membersince = div.find("div", {"class": "membersince"})
+        membersince_list.append(membersince.text.strip())
 
-for div in big_list:
-	userid = big_list.find("div", {"class": "userid"})
-	userid_list.append(userid[0].text)
-	repo = big_list.find("div", {"class": "repocount"})
-	repo_list.append(repo[0].text)
-	followercount = big_list.find("div", {"class": "followercount"})
-	followers_list.append(repo[0].text)
-	membersince = big_list.find("div", {"class": "membersince"})
-	membersince_list.append(repo[0].text)
+    data = {
+        'Login ID': userid_list,
+        'Repo Count': repo_list, 
+        'Follower Count': followers_list,
+        'Member Since': membersince_list
+    }
 
-pandas.concat([dataset,
-	pandas.DataFrame.from_records([{
-		"userid_list":userid_list,
-		"repo_list":repo_list,
-		"followers_list":followers_list,
-		"membersince_list":membersince_list
-		}])
-	])
-	
-dataset = pandas.concat([dataset,row])
+    dataset = pandas.DataFrame(data)
 
-dataset.to_csv("html_files/dataset1.csv", index=False)
+# dataset.to_csv("html_files/dataset.csv", index=False)
+
+# data_clean = pandas.read_csv("html_files/dataset.csv")
+data_initial = dataset.drop_duplicates()
+data_initial.to_csv("html_files/data_initial.csv", index=False)
+
+
+
+

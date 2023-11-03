@@ -1,4 +1,3 @@
-# initial commit
 import requests
 import os
 import time
